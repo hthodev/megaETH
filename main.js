@@ -34,7 +34,7 @@ async function main() {
       console.log("Đang thực hiện ví", address);
       if (swap) {
         await SwapDapp(address, privateKey, Number(chuKy), number);
-        await swapDappGTE(number, privateKey);
+        await swapDappGTE(number, privateKey, Number(chuKy));
       }
       if (mintToken) {
         await mintTokenDappTeko(privateKey);
