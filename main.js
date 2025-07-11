@@ -24,25 +24,27 @@ async function main() {
   let number;
   let chuKy;
   if (swap === "y") {
-    number = await rl.question("Số lượng muốn swap: ");
     chuKy = await rl.question("Số lần swap cho mỗi chu kỳ trong 1 ngày: ");
   }
   rl.close();
   while (true) {
-    for (let i = 0; i < wallets.length; i++) {
-      const [address, privateKey] = wallets[i].split("|");
-      console.log("Đang thực hiện ví", address);
-      if (swap) {
-        await SwapDapp(address, privateKey, Number(chuKy), number);
-        await swapDappGTE(number, privateKey, Number(chuKy));
-      }
-      if (mintToken) {
-        await mintTokenDappTeko(privateKey);
+    for (let j = 0; j < +chuKy; j++) {
+      for (let i = 0; i < wallets.length; i++) {
+        number = Math.floor(Math.random() * 10) / 100000;
+        console.log(number);
+        const [address, privateKey] = wallets[i].split("|");
+        console.log("Đang thực hiện ví", address);
+        if (swap === "y") {
+          await SwapDapp(address, privateKey, 1, number);
+          await swapDappGTE(number, privateKey, 1);
+        }
+        if (mintToken === "y") {
+          await mintTokenDappTeko(privateKey);
+        }
       }
     }
     console.log("Chờ 1 ngày để tiếp tục");
-
-    await new Promise((resolve) => setTimeout(resolve, 24 * 60 * 60 * 1000));
+    await new Promise(resolve => setTimeout(resolve, 24 * 60 * 60 * 1000))
   }
 }
 
